@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Báo cáo Tài chính - Tuấn Đầu Tư</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #264653 0%, #2a9d8f 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .score-card {
+            background: #f8f9fa;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #2a9d8f;
+        }
+
+        .level-badge {
+            background: #2a9d8f;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            color: #264653;
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 2px solid #e9c46a;
+            padding-bottom: 8px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .strength-item {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .strength-item:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        .weakness-item {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .weakness-item:before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+
+        .roadmap-step {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            background: #e76f51;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1 style="margin:0; font-size: 24px;">HỒ SƠ SỨC KHỎE TÀI CHÍNH</h1>
+            <p style="margin: 10px 0 0; opacity: 0.9;">Dành riêng cho: <strong>Tuấn Đầu Tư</strong></p>
+        </div>
+
+        <div style="padding: 20px;">
+            <!-- TỔNG QUAN -->
+            <div class="score-card">
+                <div class="level-badge">LEVEL 6 - ĐỘC LẬP TÀI CHÍNH</div>
+                <h2 style="margin: 5px 0 10px; color: #264653; font-size: 32px;">6.4 <span
+                        style="font-size: 16px; color: #666; font-weight: normal;">/ 7.0</span></h2>
+                <p style="margin: 0;"><strong>Nhận định nhanh:</strong> Bạn đã đạt được vị thế mà 95% mọi người mơ ước.
+                    Hệ thống tài sản của bạn đang vận hành tự động và hiệu quả. Tuy nhiên, ở cấp độ này, kẻ thù không
+                    còn là "cơm áo gạo tiền" mà là sự "chủ quan" và "thiếu tối ưu hóa".</p>
+            </div>
+
+            <!-- PHÂN TÍCH AI -->
+            <div class="section-title">🔍 PHÂN TÍCH CHUYÊN SÂU TỪ AI</div>
+
+            <p><strong>Điểm mạnh nổi bật:</strong></p>
+            <div class="strength-item"><strong>Dòng tiền thụ động mạnh mẽ:</strong> Thu nhập từ tài sản của bạn đã vượt
+                xa chi phí sinh hoạt cơ bản (>150%). Bạn thực sự sở hữu thời gian của mình.</div>
+            <div class="strength-item"><strong>Cấu trúc nợ tuyệt vời:</strong> Bạn sử dụng nợ như một đòn bẩy thông minh
+                (Good Debt) để gia tăng tài sản thay vì tiêu sản.</div>
+            <div class="strength-item"><strong>Tư duy dòng tiền (Cashflow Mindset):</strong> Khả năng phân bổ vốn vào
+                các kênh sinh lời của bạn rất sắc bén.</div>
+
+            <p style="margin-top: 20px;"><strong>Điểm cần tối ưu (Sự thật mất lòng):</strong></p>
+            <div class="weakness-item"><strong>Thanh khoản dự phòng hơi thấp:</strong> Bạn đang đẩy quá nhiều tiền vào
+                đầu tư (All-in), tỷ lệ tiền mặt dự trữ khẩn cấp đang dưới mức an toàn cho Level 6 (nên là 12-24 tháng
+                chi phí chuẩn sống cao).</div>
+            <div class="weakness-item"><strong>Chưa tối ưu thuế & thừa kế:</strong> Ở quy mô tài sản này, nếu không có
+                cấu trúc pháp lý bảo vệ tài sản, bạn đang lãng phí nguồn lực lớn.</div>
+            <div class="weakness-item"><strong>Rủi ro tập trung:</strong> 70% tài sản của bạn đang nằm ở Bất động sản.
+                Nếu thị trường đóng băng, dòng tiền của bạn sẽ bị nghẽn.</div>
+
+            <!-- LỘ TRÌNH 30 NGÀY -->
+            <div class="section-title">🚀 LỘ TRÌNH HÀNH ĐỘNG 30 NGÀY</div>
+
+            <div class="roadmap-step">
+                <div class="step-num">1</div>
+                <div>
+                    <strong>Tuần 1: Tái cấu trúc lớp bảo vệ</strong><br>
+                    Tăng quỹ dự phòng khẩn cấp lên mốc 12 tháng chi phí (hiện tại mới đạt 6 tháng). Chuyển 1 phần lợi
+                    nhuận đầu tư sang vàng hoặc tiền gửi kỳ hạn ngắn.
+                </div>
+            </div>
+
+            <div class="roadmap-step">
+                <div class="step-num">2</div>
+                <div>
+                    <strong>Tuần 2: Review danh mục đầu tư</strong><br>
+                    Thực hiện bài toán "Stress Test": Giả sử BĐS giảm 30% thanh khoản, bạn sống thế nào? Cần cơ cấu lại
+                    10-15% sang chứng khoán cổ tức hoặc trái phiếu.
+                </div>
+            </div>
+
+            <div class="roadmap-step">
+                <div class="step-num">3</div>
+                <div>
+                    <strong>Tuần 3: Tối ưu hóa pháp lý</strong><br>
+                    Làm việc với luật sư hoặc chuyên gia thuế để xem xét mô hình công ty quản lý tài sản gia đình.
+                </div>
+            </div>
+
+            <div class="roadmap-step">
+                <div class="step-num">4</div>
+                <div>
+                    <strong>Tuần 4: Nâng cấp trải nghiệm sống</strong><br>
+                    Ở Level 6, tiền là công cụ hạnh phúc. Hãy trích 5% thu nhập thụ động cho một quỹ "Play Jar" - Tiêu
+                    xài không cần nhìn giá để thưởng cho bản thân.
+                </div>
+            </div>
+
+            <div
+                style="background: #e9f5f5; padding: 15px; border-radius: 8px; margin-top: 20px; text-align: center; border: 1px dashed #2a9d8f;">
+                <strong>💡 Lời khuyên thị trường lúc này:</strong><br>
+                "Thị trường đang tham lam, hãy tham lam một cách có chọn lọc. Đừng quên gốc rễ của sự giàu có là
+                <strong>sự bền vững</strong>."
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p>© 2024 BacSiTaiChinh.vn - Đồng hành cùng tự do thịnh vượng.</p>
+        </div>
+    </div>
+</body>
+
+</html>

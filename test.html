@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Chẩn đoán sức khỏe tài chính - Bước 1</title>
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🩺</text></svg>">
+    <link rel="stylesheet" href="assets/css/style.css"> <!-- Tận dụng lại biến màu và font từ style chung -->
+    <link rel="stylesheet" href="assets/css/test.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- Header tối giản -->
+    <header class="header">
+        <nav class="container header-row">
+            <a href="index.html" class="logo">
+                <span style="font-size: 1.5rem;">🩺</span>
+                Sức Khỏe Tài Chính
+            </a>
+            <div style="display: flex; align-items: center; gap: 24px;">
+                <a href="https://beacons.ai/tuan.dau.tu" target="_blank" class="doctor-link">
+                    <span style="font-size: 1.5rem;">👨‍⚕️</span>
+                    Bác sĩ tài chính
+                </a>
+                <a href="index.html" class="btn-close" title="Thoát kiểm tra">Thoát kiểm tra ✕</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="test-container">
+        <div class="layout-grid">
+            <!-- Cột trái: Biểu đồ (PC) / Trên cùng (Mobile) -->
+            <div class="chart-col">
+                <div class="chart-wrapper">
+                    <canvas id="radarChart"></canvas>
+                    <div
+                        style="display: flex; justify-content: center; gap: 15px; font-size: 0.8rem; margin-top: 10px; color: #64748b;">
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <span
+                                style="width: 10px; height: 10px; background: #2C6E73; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 1px #2C6E73;"></span>
+                            <span>Kết quả của bạn</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <span
+                                style="width: 10px; height: 10px; background: transparent; border: 1.5px dashed #FF6B6B; border-radius: 50%;"></span>
+                            <span>Trung bình người test</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Vùng hiển thị giải thích (sẽ được JS cập nhật) -->
+                <div id="chart-explanation" class="chart-explanation"></div>
+
+                <!-- CTA: Nhắc nhở về phần thưởng (Đã di chuyển) -->
+                <div
+                    style="margin-top: 16px; background: #f0fdf4; border: 1px dashed #4ade80; padding: 10px 15px; border-radius: 8px; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.2rem;">🎁</span>
+                    <div>
+                        <strong style="color: #166534; font-size: 0.9rem;">Phần thưởng đang chờ bạn:</strong>
+                        <div style="color: #15803d; font-size: 0.85rem;">Bản đồ sức khỏe tài chính
+                            (Trị giá 999k)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột phải: Câu hỏi (PC) / Dưới (Mobile) -->
+            <div class="quiz-col" style="display: flex; flex-direction: column;">
+
+                <!-- Thanh tiến độ -->
+                <div class="progress-step-text" id="progress-step-text"
+                    style="margin-bottom: 8px; font-weight: 500; color: var(--color-primary); display: flex; justify-content: space-between;">
+                    <span>Câu 1/12</span>
+                    <span style="font-size: 0.8rem; color: #64748b;">Sắp hoàn thành...</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+
+                <!-- Khu vực câu hỏi -->
+                <div id="quiz-area" class="card quiz-card">
+                    <!-- Nội dung sẽ được render bởi JS -->
+                    <div class="question-fade-wrapper">
+                        <h2 id="question-text" class="question-text">Đang tải câu hỏi...</h2>
+                        <div id="options-container" class="options-list">
+                            <!-- Các lựa chọn sẽ hiện ở đây -->
+                        </div>
+                    </div>
+
+                    <!-- Điều hướng -->
+                    <div class="quiz-nav">
+                        <button id="btn-back" class="btn btn-text" style="visibility: hidden;">Quay lại</button>
+                        <button id="btn-quick-test" class="btn btn-text"
+                            style="color: #E63946; font-weight: bold; display: none;">⚡ Trả lời nhanh</button>
+                        <button id="btn-next" class="btn btn-primary" disabled>Tiếp theo ➔</button>
+                    </div>
+                    <!-- Trust Badge -->
+                    <div
+                        style="text-align: center; margin-top: 12px; font-size: 0.8rem; color: #94a3b8; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <span>🔒</span> Mọi câu trả lời đều ẩn danh & bảo mật 100%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/test.js"></script>
+    <!-- Floating Contact Button (Facebook Only) -->
+    <a href="https://www.facebook.com/TuanDauTu68/" target="_blank" class="floating-contact">
+        <div class="pulse-ring"></div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png"
+            alt="Chat Facebook" style="width: 30px; height: 30px; object-fit: contain;">
+        <span class="text">Chat Ngay</span>
+    </a>
+
+    <style>
+        /* Container/Button */
+        .floating-contact {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            width: 60px;
+            height: 60px;
+            background: #1877f2;
+            /* Facebook Blue */
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .floating-contact:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(24, 119, 242, 0.5);
+        }
+
+        .floating-contact .text {
+            font-size: 10px;
+            font-weight: 700;
+            margin-top: 2px;
+            color: white;
+        }
+
+        /* Pulse Animation */
+        .pulse-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #1877f2;
+            animation: ring-pulse 2s infinite;
+        }
+
+        @keyframes ring-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+
+</html>
