@@ -3189,7 +3189,8 @@
                     incomeChartImg: incomeCanvas ? incomeCanvas.toDataURL('image/png') : "",
                     assetChartImg: assetCanvas ? assetCanvas.toDataURL('image/png') : "",
                     debtChartImg: debtCanvas ? debtCanvas.toDataURL('image/png') : "",
-                    logOnly: false
+                    logOnly: false,
+                    affiliateId: (typeof getCookie === 'function') ? getCookie('affiliate_id') : ""
                 };
 
                 // Use no-cors mode
@@ -3761,7 +3762,10 @@
                     costChartImg: costCanvas ? costCanvas.toDataURL('image/png') : "",
                     incomeChartImg: incomeCanvas ? incomeCanvas.toDataURL('image/png') : "",
                     assetChartImg: assetCanvas ? assetCanvas.toDataURL('image/png') : "",
-                    debtChartImg: debtCanvas ? debtCanvas.toDataURL('image/png') : ""
+                    debtChartImg: debtCanvas ? debtCanvas.toDataURL('image/png') : "",
+                    // Affiliate Info (Passed to Backend for attribution)
+                    affiliateId: (typeof getCookie === 'function') ? getCookie('affiliate_id') : "",
+                    affiliateProductId: (typeof getCookie === 'function') ? getCookie('affiliate_product_id') : ""
                 };
 
                 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8jSZL4aub8dWhnHyzr8AnR9Ar7xE2_EUANqV5ZrT4xW7tXYXUNGnaSNWZaxI6AjMu/exec';
@@ -3773,30 +3777,19 @@
                     body: JSON.stringify(payload)
                 });
 
-                // ====== AFFILIATE TRACKING ======
+                // ====== AFFILIATE TRACKING (MOVED TO SERVER SIDE) ======
+                // Client-side tracking removed to ensure reliability and security via Code.gs
+                /*
                 try {
                     const affiliateId = getCookie('affiliate_id');
                     const productId = getCookie('affiliate_product_id');
                     if (affiliateId && productId) {
-                        const orderId = 'ORD-' + Date.now();
-                        await fetch(`${AFFILIATE_SERVICE_URL}/api/v1/track/conversion`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-API-Key': window.AFFILIATE_API_KEY || ''
-                            },
-                            body: JSON.stringify({
-                                productId: productId,
-                                orderId: orderId,
-                                orderAmount: 199000,
-                                affiliateId: affiliateId
-                            })
-                        });
-                        console.log('✅ Affiliate conversion tracked for:', affiliateId);
+                       // ... logic moved to server ...
                     }
                 } catch (affErr) {
                     console.warn('Affiliate tracking skipped:', affErr.message);
                 }
+                */
                 // ================================
 
 
