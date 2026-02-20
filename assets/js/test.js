@@ -566,6 +566,14 @@ function finishTest() {
     const sendLog = async () => {
         try {
             const chartCanvas = document.getElementById('radarChart');
+            // Helper: Get Cookie
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                return "";
+            }
+
             const chartBase64 = chartCanvas ? chartCanvas.toDataURL('image/png') : "";
             const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8jSZL4aub8dWhnHyzr8AnR9Ar7xE2_EUANqV5ZrT4xW7tXYXUNGnaSNWZaxI6AjMu/exec';
 
@@ -577,27 +585,21 @@ function finishTest() {
                 details: fullResultData,
                 chartImage: "",
                 name: "Anonymous User",
-                email: ""
+                email: "",
+                affiliateId: getCookie('affiliate_id') || "",
+                affiliateProductId: getCookie('affiliate_product_id') || ""
             };
 
             console.log("🚀 Sending Auto-log payload:", payload);
 
-            // Sử dụng Promise.race để timeout sau 5s (tăng từ 2s) để đảm bảo script kịp chạy
-            const fetchPromise = fetch(SCRIPT_URL, {
+            const response = await fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 keepalive: true,
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify(payload)
             });
-
-            const timeoutPromise = new Promise(resolve => setTimeout(() => {
-                console.warn("⚠️ Auto-log request timed out after 5s");
-                resolve("timeout");
-            }, 5000));
-
-            await Promise.race([fetchPromise, timeoutPromise]);
-            console.log("✅ Auto-log request finished (or timed out). Proceeding...");
+            console.log("✅ Auto-log request sent.");
 
         } catch (e) {
             console.error("❌ Auto-log failed:", e);
