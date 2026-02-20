@@ -3132,6 +3132,36 @@
             return "";
         }
 
+        // --- ROBUST AFFILIATE ID GETTER (Shared) ---
+        function getStoredAffiliateId() {
+            // 1. Check URL Params (Priority 1)
+            const urlParams = new URLSearchParams(window.location.search);
+            let affId = urlParams.get('ref') || urlParams.get('affiliateId') || urlParams.get('aff_id');
+
+            // 2. Check Cookie (Priority 2)
+            if (!affId) affId = getCookie('affiliate_id');
+
+            // 3. Check LocalStorage (Priority 3 - Default Backup)
+            if (!affId) affId = localStorage.getItem('affiliate_id');
+
+            // Sync: If found, save to localStorage/Cookie to persist for next steps
+            if (affId) {
+                if (localStorage.getItem('affiliate_id') !== affId) localStorage.setItem('affiliate_id', affId);
+                if (document.cookie.indexOf('affiliate_id=') === -1) {
+                    document.cookie = `affiliate_id=${affId}; path=/; max-age=2592000`;
+                }
+            }
+            return affId || "";
+        }
+
+        function getStoredProductId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let prodId = urlParams.get('productId') || getCookie('affiliate_product_id') || localStorage.getItem('affiliate_product_id');
+            if (prodId && localStorage.getItem('affiliate_product_id') !== prodId) localStorage.setItem('affiliate_product_id', prodId);
+            return prodId || "";
+        }
+        // ------------------------------------------
+
         setTimeout(() => {
             console.log("Triggering Email Modal...");
             const modal = document.getElementById('emailModal');
@@ -3198,7 +3228,7 @@
                     assetChartImg: assetCanvas ? assetCanvas.toDataURL('image/png') : "",
                     debtChartImg: debtCanvas ? debtCanvas.toDataURL('image/png') : "",
                     logOnly: false,
-                    affiliateId: getCookie('affiliate_id') || ""
+                    affiliateId: getStoredAffiliateId()
                 };
 
                 console.log("Submitting Payload with AffiliateID:", payload.affiliateId);
@@ -3774,8 +3804,9 @@
                     assetChartImg: assetCanvas ? assetCanvas.toDataURL('image/png') : "",
                     debtChartImg: debtCanvas ? debtCanvas.toDataURL('image/png') : "",
                     // Affiliate Info (Passed to Backend for attribution)
-                    affiliateId: (typeof getCookie === 'function') ? getCookie('affiliate_id') : "",
-                    affiliateProductId: (typeof getCookie === 'function') ? getCookie('affiliate_product_id') : ""
+                    // Affiliate Info (Passed to Backend for attribution)
+                    affiliateId: getStoredAffiliateId(),
+                    affiliateProductId: getStoredProductId()
                 };
 
                 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8jSZL4aub8dWhnHyzr8AnR9Ar7xE2_EUANqV5ZrT4xW7tXYXUNGnaSNWZaxI6AjMu/exec';

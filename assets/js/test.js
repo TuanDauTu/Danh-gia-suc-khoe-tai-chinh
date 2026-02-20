@@ -566,13 +566,58 @@ function finishTest() {
     const sendLog = async () => {
         try {
             const chartCanvas = document.getElementById('radarChart');
-            // Helper: Get Cookie
-            function getCookie(name) {
-                const value = `; ${document.cookie}`;
-                const parts = value.split(`; ${name}=`);
-                if (parts.length === 2) return parts.pop().split(';').shift();
-                return "";
+
+            // --- ROBUST AFFILIATE ID GETTER ---
+            function getAffiliateId() {
+                // 1. Check URL Params first (Most reliable for direct links)
+                const urlParams = new URLSearchParams(window.location.search);
+                let affId = urlParams.get('ref') || urlParams.get('affiliateId') || urlParams.get('aff_id');
+
+                // 2. Check Cookie
+                if (!affId) {
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; affiliate_id=`);
+                    if (parts.length === 2) affId = parts.pop().split(';').shift();
+                }
+
+                // 3. Check LocalStorage (Backup)
+                if (!affId) {
+                    affId = localStorage.getItem('affiliate_id');
+                }
+
+                // --- AUTO SAVE FOR PERSISTENCE ---
+                if (affId) {
+                    // Save to LocalStorage for next steps
+                    if (localStorage.getItem('affiliate_id') !== affId) {
+                        localStorage.setItem('affiliate_id', affId);
+                    }
+                    // Save to Cookie if missing
+                    if (document.cookie.indexOf('affiliate_id=') === -1) {
+                        document.cookie = `affiliate_id=${affId}; path=/; max-age=2592000`; // 30 days
+                    }
+                }
+
+                return affId || "";
             }
+
+            // Also get Product ID if possible
+            function getAffiliateProductId() {
+                const urlParams = new URLSearchParams(window.location.search);
+                let prodId = urlParams.get('productId') || localStorage.getItem('affiliate_product_id');
+
+                if (!prodId) {
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; affiliate_product_id=`);
+                    if (parts.length === 2) prodId = parts.pop().split(';').shift();
+                }
+
+                // Save if found
+                if (prodId && localStorage.getItem('affiliate_product_id') !== prodId) {
+                    localStorage.setItem('affiliate_product_id', prodId);
+                }
+                return prodId || "";
+            }
+            // ----------------------------------
 
             const chartBase64 = chartCanvas ? chartCanvas.toDataURL('image/png') : "";
             const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8jSZL4aub8dWhnHyzr8AnR9Ar7xE2_EUANqV5ZrT4xW7tXYXUNGnaSNWZaxI6AjMu/exec';
@@ -586,8 +631,8 @@ function finishTest() {
                 chartImage: "",
                 name: "Anonymous User",
                 email: "",
-                affiliateId: getCookie('affiliate_id') || "",
-                affiliateProductId: getCookie('affiliate_product_id') || ""
+                affiliateId: getAffiliateId(),
+                affiliateProductId: getAffiliateProductId()
             };
 
             console.log("🚀 Sending Auto-log payload:", payload);
