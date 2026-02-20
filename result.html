@@ -3124,6 +3124,14 @@
         const hasVisited = sessionStorage.getItem('hasVisitedFinanceHealth');
         const delayTime = hasVisited ? 0 : 15000;
 
+        // Helper: Get Cookie
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return "";
+        }
+
         setTimeout(() => {
             console.log("Triggering Email Modal...");
             const modal = document.getElementById('emailModal');
@@ -3190,8 +3198,10 @@
                     assetChartImg: assetCanvas ? assetCanvas.toDataURL('image/png') : "",
                     debtChartImg: debtCanvas ? debtCanvas.toDataURL('image/png') : "",
                     logOnly: false,
-                    affiliateId: (typeof getCookie === 'function') ? getCookie('affiliate_id') : ""
+                    affiliateId: getCookie('affiliate_id') || ""
                 };
+
+                console.log("Submitting Payload with AffiliateID:", payload.affiliateId);
 
                 // Use no-cors mode
                 await fetch(SCRIPT_URL, {
